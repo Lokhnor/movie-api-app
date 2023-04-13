@@ -1,21 +1,27 @@
-import React from "react";
-import { Text, View, StyleSheet } from "react-native";
-import { MoviePoster } from "../components/MoviePoster";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Button } from "react-native";
+import { FetchMovies } from "../utils/fetchMovies";
+import { Movie } from "../components/movie/Movie";
 
 export function HomeScreen() {
+  const [movieData, setMovieData] = useState<any>(null);
+
+  async function handlePress() {
+    const result = await FetchMovies();
+    setMovieData(result);
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Movies</Text>
       </View>
-      <View style={styles.movieList}>
-        <View>
-          <MoviePoster />
+      {movieData && (
+        <View style={styles.movieList}>
+          <Movie movieData={movieData} />
         </View>
-        <View>
-          <MoviePoster />
-        </View>
-      </View>
+      )}
+      <Button title="Fetch Movies" onPress={handlePress} />
     </View>
   );
 }
@@ -28,9 +34,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   movieList: {
-    display: "flex",
-    flexWrap: "wrap",
-    width: 360,
+    width: 180,
     height: 280,
     justifyContent: "center",
     alignItems: "center",
