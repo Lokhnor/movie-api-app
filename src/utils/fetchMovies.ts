@@ -6,7 +6,7 @@ export async function FetchMovies() {
       params: {
         i: "tt0109040",
         type: "movie",
-        apikey: "dac1d2ea",
+        apikey: "",
       },
     });
     console.log("You have fetched data from API", res.data);
