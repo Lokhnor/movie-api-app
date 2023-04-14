@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_KEY } from "../../config";
 
 export async function FetchMovies() {
   try {
@@ -6,7 +7,7 @@ export async function FetchMovies() {
       params: {
         i: "tt0109040",
         type: "movie",
-        apikey: "dac1d2ea",
+        apikey: API_KEY,
       },
     });
     console.log("You have fetched data from API", res.data);

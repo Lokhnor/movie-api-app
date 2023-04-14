@@ -18,9 +18,13 @@ export function HomeScreen() {
         <HeaderText>Movies</HeaderText>
       </Header>
       {movieData && (
-        <MovieList>
-          <Movie movieData={movieData} />
-        </MovieList>
+        <>
+          <MovieList>
+            <Movie movieData={movieData} />
+            <Movie movieData={movieData} />
+            <Movie movieData={movieData} />
+          </MovieList>
+        </>
       )}
       <Button title="Fetch Movies" onPress={handlePress} />
     </Container>
@@ -48,8 +52,9 @@ const HeaderText = styled.Text`
 `;
 
 const MovieList = styled.View`
-  width: 180px;
-  height: 280px;
+  flex-wrap: wrap;
+  width: 360px;
+  height: 600px;
   justify-content: center;
   align-items: center;
   background-color: #dfe0e2;
