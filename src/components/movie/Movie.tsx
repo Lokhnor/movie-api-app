@@ -1,4 +1,5 @@
-import { View, StyleSheet, Image } from "react-native";
+import { View } from "react-native";
+import styled from "styled-components/native";
 
 export function Movie({ movieData }: any) {
   console.log("Here is your data: ");
@@ -7,30 +8,28 @@ export function Movie({ movieData }: any) {
   return (
     <>
       {movieData && (
-        <View style={styles.container}>
+        <Container>
           <View>
-            <Image
-              style={styles.image}
+            <PosterImage
               source={{
                 uri: movieData.Poster,
               }}
             />
           </View>
-        </View>
+        </Container>
       )}
     </>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    height: 280,
-    width: 180,
-    backgroundColor: "grey",
-  },
-  image: {
-    height: 280,
-    width: 180,
-  },
-});
+const Container = styled.View`
+  display: flex;
+  height: 280px;
+  width: 180px;
+  background-color: grey;
+`;
+
+const PosterImage = styled.Image`
+  height: 280px;
+  width: 180px;
+`;

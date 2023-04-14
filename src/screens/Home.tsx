@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
+import { Button } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
 import { Movie } from "../components/movie/Movie";
+import styled from "styled-components/native";
 
 export function HomeScreen() {
   const [movieData, setMovieData] = useState<any>(null);
@@ -12,43 +13,44 @@ export function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Movies</Text>
-      </View>
+    <Container>
+      <Header>
+        <HeaderText>Movies</HeaderText>
+      </Header>
       {movieData && (
-        <View style={styles.movieList}>
+        <MovieList>
           <Movie movieData={movieData} />
-        </View>
+        </MovieList>
       )}
       <Button title="Fetch Movies" onPress={handlePress} />
-    </View>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "grey",
-    width: "100%",
-    height: "92%",
-    alignItems: "center",
-  },
-  movieList: {
-    width: 180,
-    height: 280,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#DFE0E2",
-  },
-  header: {
-    backgroundColor: "#224099",
-    width: "100%",
-    height: "10%",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  headerText: {
-    color: "black",
-    fontSize: 40,
-  },
-});
+const Container = styled.View`
+  background-color: grey;
+  width: 100%;
+  height: 92%;
+  align-items: center;
+`;
+
+const Header = styled.View`
+  background-color: #224099;
+  width: 100%;
+  height: 10%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const HeaderText = styled.Text`
+  color: black;
+  font-size: 40px;
+`;
+
+const MovieList = styled.View`
+  width: 180px;
+  height: 280px;
+  justify-content: center;
+  align-items: center;
+  background-color: #dfe0e2;
+`;
