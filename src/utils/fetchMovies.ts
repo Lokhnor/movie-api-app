@@ -5,12 +5,12 @@ export async function FetchMovies() {
   try {
     const res = await axios.get("http://www.omdbapi.com/", {
       params: {
-        i: "tt0109040",
+        s: "godzilla",
         type: "movie",
         apikey: API_KEY,
       },
     });
-    console.log("You have fetched data from API", res.data);
+    console.log("You have fetched data from API");
     return res.data;
   } catch (err) {
     console.error("Failed to fetch data from OMDB");

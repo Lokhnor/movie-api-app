@@ -1,41 +1,55 @@
-import React, { useState } from "react";
-import { Button } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Button, FlatList } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
 import { Movie } from "../components/movie/Movie";
 import styled from "styled-components/native";
+import { mockData } from "../../mocks";
 
 export function HomeScreen() {
-  const [movieData, setMovieData] = useState<any>(null);
+  const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
+  const [movieData, setMovieData] = useState<object[]>([]);
 
-  async function handlePress() {
-    const result = await FetchMovies();
-    setMovieData(result);
+  useEffect(() => {
+    const fetchOnFirstLoad = async () => {
+      // const result = await FetchMovies();
+      // setMovieData(result);
+      setMovieData(mockData.slice(0, moviesDisplayed));
+    };
+    fetchOnFirstLoad();
+  }, []);
+
+  function handleLoadMore() {
+    setMoviesDisplayed(moviesDisplayed + 2);
+    // fetch more movies from api
+    setMovieData(mockData.slice(0, moviesDisplayed + 2));
   }
+
+  const renderItem = ({ item }: { item: any }) => (
+    <Movie key={item.imdbID} movieData={item} />
+  );
 
   return (
     <Container>
       <Header>
         <HeaderText>Movies</HeaderText>
       </Header>
-      {movieData && (
-        <>
-          <MovieList>
-            <Movie movieData={movieData} />
-            <Movie movieData={movieData} />
-            <Movie movieData={movieData} />
-          </MovieList>
-        </>
-      )}
-      <Button title="Fetch Movies" onPress={handlePress} />
+      <FlatList
+        data={movieData}
+        renderItem={renderItem}
+        keyExtractor={(item) => (item as any).imdbID}
+        contentContainerStyle={{ padding: 16 }}
+      />
+      <Button title="Load More" onPress={handleLoadMore} />
     </Container>
   );
 }
 
 const Container = styled.View`
+  flex: 1;
   background-color: grey;
-  width: 100%;
-  height: 92%;
   align-items: center;
+  width: 100%;
+  height: 100%;
 `;
 
 const Header = styled.View`
@@ -49,13 +63,4 @@ const Header = styled.View`
 const HeaderText = styled.Text`
   color: black;
   font-size: 40px;
-`;
-
-const MovieList = styled.View`
-  flex-wrap: wrap;
-  width: 360px;
-  height: 600px;
-  justify-content: center;
-  align-items: center;
-  background-color: #dfe0e2;
 `;
