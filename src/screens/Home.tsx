@@ -25,7 +25,9 @@ export function HomeScreen() {
   }
 
   const renderItem = ({ item }: { item: any }) => (
-    <Movie key={item.imdbID} movieData={item} />
+    <MovieList>
+      <Movie key={item.imdbID} movieData={item} />
+    </MovieList>
   );
 
   return (
@@ -37,7 +39,7 @@ export function HomeScreen() {
         data={movieData}
         renderItem={renderItem}
         keyExtractor={(item) => (item as any).imdbID}
-        contentContainerStyle={{ padding: 16 }}
+        numColumns={2}
       />
       <Button title="Load More" onPress={handleLoadMore} />
     </Container>
@@ -63,4 +65,10 @@ const Header = styled.View`
 const HeaderText = styled.Text`
   color: black;
   font-size: 40px;
+`;
+
+const MovieList = styled.View`
+  flex: 0 0 50%;
+  width: 100%;
+  padding: 8px;
 `;

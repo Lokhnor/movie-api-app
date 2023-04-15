@@ -20,13 +20,12 @@ export function Movie({ movieData }: any) {
 }
 
 const Container = styled.View`
-  flex: 1;
-  padding: 8px;
-  background-color: green;
+  height: 274px;
+  width: 185px;
 `;
 
 const PosterImage = styled.Image`
-  height: 280px;
-  width: 180px;
-  background-color: red;
+  height: 274px;
+  width: 185px;
+  background-color: black;
 `;
