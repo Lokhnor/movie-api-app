@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/types";
-import { MoviePoster } from "../components/movie-poster/MoviePoster";
+import { MoviePoster } from "../components/MoviePoster";
 import { Container } from "../styles";
 import { useEffect, useState } from "react";
 import { FetchMovies } from "../utils/fetchMovies";
@@ -15,7 +15,6 @@ export function Details(props: DetailsScreenProps) {
     const runOnLoad = async () => {
       const result = await FetchMovies((props.route.params as any).Title, true);
       setMovieDetails(result);
-      console.log("inside Details screen: ", result);
     };
     runOnLoad();
   }, []);

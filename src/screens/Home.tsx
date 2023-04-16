@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, FlatList, StatusBar } from "react-native";
-import { FetchMovies } from "../utils/fetchMovies";
-import { MoviePoster } from "../components/movie-poster/MoviePoster";
+import { Button, FlatList, StatusBar, Pressable } from "react-native";
 import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import Toast from "react-native-toast-message";
+import { FetchMovies } from "../utils/fetchMovies";
+import { MoviePoster } from "../components/MoviePoster";
 import { RootStackParamList } from "../types/types";
-import { Pressable } from "react-native";
 import { Container } from "../styles";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Movies">;
@@ -33,14 +33,23 @@ export function HomeScreen(props: HomeScreenProps) {
   async function movieSearch() {
     if (searchInput) {
       const { Search } = await FetchMovies(searchInput, false);
-      setApiResults(Search);
-      setMovieData(Search.slice(0, 2));
-      setMoviesDisplayed(2);
+      if (Search === undefined) {
+        console.log("Search is undefined");
+        Toast.show({
+          type: "error",
+          text1: "No results for your search",
+          visibilityTime: 2000,
+          autoHide: true,
+        });
+      } else {
+        setApiResults(Search);
+        setMovieData(Search.slice(0, 2));
+        setMoviesDisplayed(2);
+      }
     }
   }
 
   const renderItem = ({ item }: { item: any }) => {
-    // console.log(item);
     return (
       <MovieList>
         <Pressable onPress={() => props.navigation.push("Details", item)}>
@@ -66,6 +75,7 @@ export function HomeScreen(props: HomeScreenProps) {
         numColumns={2}
       />
       <Button title="Load More" onPress={handleLoadMore} />
+      <Toast />
     </Container>
   );
 }
