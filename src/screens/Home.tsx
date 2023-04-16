@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, FlatList, SafeAreaView, StatusBar } from "react-native";
+import { Button, FlatList, StatusBar } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
 import { Movie } from "../components/movie/Movie";
 import styled from "styled-components/native";
@@ -33,11 +33,9 @@ export function HomeScreen() {
   return (
     <Container>
       <StatusBar backgroundColor="#224099" barStyle="light-content" />
-      <SafeAreaView>
-        <Header>
-          <HeaderText>Movies</HeaderText>
-        </Header>
-      </SafeAreaView>
+      <Header>
+        <HeaderText>Movies</HeaderText>
+      </Header>
       <FlatList
         data={movieData}
         renderItem={renderItem}
@@ -51,7 +49,7 @@ export function HomeScreen() {
 
 const Container = styled.View`
   flex: 1;
-  background-color: grey;
+  background-color: white;
   align-items: center;
   width: 100%;
   height: 100%;
