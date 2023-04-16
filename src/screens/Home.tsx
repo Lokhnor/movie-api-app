@@ -13,7 +13,7 @@ export function HomeScreen() {
 
   useEffect(() => {
     const fetchOnFirstLoad = async () => {
-      const result = await FetchMovies();
+      const result = await FetchMovies("godzilla");
       setApiResults(result.Search);
       setMovieData(result.Search.slice(0, moviesDisplayed));
     };
@@ -23,6 +23,14 @@ export function HomeScreen() {
   async function handleLoadMore() {
     setMovieData(apiResults.slice(0, moviesDisplayed + 2));
     setMoviesDisplayed(moviesDisplayed + 2);
+  }
+
+  async function movieSearch() {
+    const result = await FetchMovies(searchInput);
+    console.log(result.Search[0]);
+    setApiResults(result.Search);
+    setMovieData(result.Search.slice(0, 2));
+    setMoviesDisplayed(2);
   }
 
   const renderItem = ({ item }: { item: any }) => (
@@ -41,6 +49,7 @@ export function HomeScreen() {
         onChangeText={setSearchInput}
         value={searchInput}
         placeholder="Search Movie"
+        onSubmitEditing={movieSearch}
       ></MovieSearch>
       <FlatList
         data={movieData}
@@ -62,7 +71,7 @@ const Container = styled.View`
 `;
 
 const Header = styled.View`
-  background-color: #224099;
+  background-color: #24295c;
   width: 100%;
   align-items: center;
   justify-content: center;
@@ -70,13 +79,14 @@ const Header = styled.View`
 `;
 
 const HeaderText = styled.Text`
-  color: white;
+  color: #fffefe;
   font-size: 40px;
 `;
 
 const MovieSearch = styled.TextInput`
   background-color: white;
-  border-color: black;
+  border-radius: 10px;
+  border-color: grey;
   border-width: 1px;
   padding: 4px;
   width: 98%;
