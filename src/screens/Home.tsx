@@ -3,8 +3,12 @@ import { Button, FlatList, StatusBar } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
 import { Movie } from "../components/movie/Movie";
 import styled from "styled-components/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types/types";
 
-export function HomeScreen() {
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
+
+export function HomeScreen(props: HomeScreenProps) {
   const [apiResults, setApiResults] = useState<object[]>([]);
   const [movieData, setMovieData] = useState<object[]>([]);
   const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
@@ -58,6 +62,14 @@ export function HomeScreen() {
         numColumns={2}
       />
       <Button title="Load More" onPress={handleLoadMore} />
+      <Button
+        title="Go to Profile"
+        onPress={() => props.navigation.push("Profile")}
+      />
+      <Button
+        title="Go to Settings"
+        onPress={() => props.navigation.push("Settings")}
+      />
     </Container>
   );
 }
