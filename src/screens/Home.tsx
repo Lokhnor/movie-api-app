@@ -9,6 +9,8 @@ export function HomeScreen() {
   const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
   const [movieData, setMovieData] = useState<object[]>([]);
 
+  const [searchInput, setSearchInput] = useState<string>("");
+
   useEffect(() => {
     const fetchOnFirstLoad = async () => {
       // const result = await FetchMovies();
@@ -36,6 +38,11 @@ export function HomeScreen() {
       <Header>
         <HeaderText>Movies</HeaderText>
       </Header>
+      <MovieSearch
+        onChangeText={setSearchInput}
+        value={searchInput}
+        placeholder="Search Movie"
+      ></MovieSearch>
       <FlatList
         data={movieData}
         renderItem={renderItem}
@@ -66,6 +73,15 @@ const Header = styled.View`
 const HeaderText = styled.Text`
   color: white;
   font-size: 40px;
+`;
+
+const MovieSearch = styled.TextInput`
+  background-color: white;
+  border-color: black;
+  border-width: 1px;
+  padding: 4px;
+  width: 98%;
+  margin-top: 10px;
 `;
 
 const MovieList = styled.View`

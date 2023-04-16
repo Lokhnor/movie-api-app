@@ -10,7 +10,7 @@ export async function FetchMovies() {
         apikey: API_KEY,
       },
     });
-    console.log("You have fetched data from API");
+    // console.log("You have fetched data from API", res.data);
     return res.data;
   } catch (err) {
     console.error("Failed to fetch data from OMDB");
