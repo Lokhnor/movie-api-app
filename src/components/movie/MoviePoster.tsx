@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import styled from "styled-components/native";
 
-export function Movie({ movieData }: any) {
+export function MoviePoster({ movieData }: any) {
   return (
     <>
       {movieData && (

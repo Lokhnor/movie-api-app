@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button, FlatList, StatusBar } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
-import { Movie } from "../components/movie/Movie";
+import { MoviePoster } from "../components/movie/MoviePoster";
 import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/types";
+import { Pressable } from "react-native";
 
-type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Home">;
+type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Movies">;
 
 export function HomeScreen(props: HomeScreenProps) {
   const [apiResults, setApiResults] = useState<object[]>([]);
@@ -37,18 +38,20 @@ export function HomeScreen(props: HomeScreenProps) {
     }
   }
 
-  const renderItem = ({ item }: { item: any }) => (
-    <MovieList>
-      <Movie key={item.imdbID} movieData={item} />
-    </MovieList>
-  );
+  const renderItem = ({ item }: { item: any }) => {
+    // console.log(item);
+    return (
+      <MovieList>
+        <Pressable onPress={() => props.navigation.push("Details", item)}>
+          <MoviePoster key={item.imdbID} movieData={item} />
+        </Pressable>
+      </MovieList>
+    );
+  };
 
   return (
     <Container>
       <StatusBar backgroundColor="#224099" barStyle="light-content" />
-      <Header>
-        <HeaderText>Movies</HeaderText>
-      </Header>
       <MovieSearch
         onChangeText={setSearchInput}
         value={searchInput}
@@ -62,37 +65,16 @@ export function HomeScreen(props: HomeScreenProps) {
         numColumns={2}
       />
       <Button title="Load More" onPress={handleLoadMore} />
-      <Button
-        title="Go to Profile"
-        onPress={() => props.navigation.push("Profile")}
-      />
-      <Button
-        title="Go to Settings"
-        onPress={() => props.navigation.push("Settings")}
-      />
     </Container>
   );
 }
 
 const Container = styled.View`
   flex: 1;
-  background-color: white;
+  background-color: #24295c;
   align-items: center;
   width: 100%;
   height: 100%;
-`;
-
-const Header = styled.View`
-  background-color: #24295c;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  margin-top: ${StatusBar.currentHeight}px;
-`;
-
-const HeaderText = styled.Text`
-  color: #fffefe;
-  font-size: 40px;
 `;
 
 const MovieSearch = styled.TextInput`
