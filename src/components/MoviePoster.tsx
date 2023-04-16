@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import styled from "styled-components/native";
 
 export function MoviePoster({ movieData }: any) {
@@ -6,13 +5,11 @@ export function MoviePoster({ movieData }: any) {
     <>
       {movieData && (
         <Container>
-          <View>
-            <PosterImage
-              source={{
-                uri: movieData.Poster,
-              }}
-            />
-          </View>
+          <PosterImage
+            source={{
+              uri: movieData.Poster,
+            }}
+          />
         </Container>
       )}
     </>
