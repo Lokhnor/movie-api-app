@@ -10,6 +10,7 @@ export async function FetchMovies(movieSearch: string, getDetails: boolean) {
         apikey: API_KEY,
       },
     });
+    console.log("fetched");
     return data;
   } catch (err) {
     console.error("Failed to fetch data from OMDB");

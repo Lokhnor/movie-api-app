@@ -1,10 +1,11 @@
+import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { RootStackParamList } from "../types/types";
 import { MoviePoster } from "../components/MoviePoster";
 import { Container } from "../styles";
 import { useEffect, useState } from "react";
 import { FetchMovies } from "../utils/fetchMovies";
-import styled from "styled-components/native";
 
 type DetailsScreenProps = NativeStackScreenProps<RootStackParamList, "Details">;
 
@@ -13,8 +14,21 @@ export function Details(props: DetailsScreenProps) {
 
   useEffect(() => {
     const runOnLoad = async () => {
-      const result = await FetchMovies((props.route.params as any).Title, true);
-      setMovieDetails(result);
+      const cachedMovie = await AsyncStorage.getItem(
+        (props.route.params as any).Title
+      );
+      if (cachedMovie) {
+        setMovieDetails(JSON.parse(cachedMovie));
+        console.log("using cache");
+      } else {
+        console.log("not using cache");
+        const result = await FetchMovies(
+          (props.route.params as any).Title,
+          true
+        );
+        setMovieDetails(result);
+        await AsyncStorage.setItem(result.Title, JSON.stringify(result));
+      }
     };
     runOnLoad();
   }, []);
