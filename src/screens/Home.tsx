@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Button, FlatList, StatusBar } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
-import { MoviePoster } from "../components/movie/MoviePoster";
+import { MoviePoster } from "../components/movie-poster/MoviePoster";
 import styled from "styled-components/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/types";
 import { Pressable } from "react-native";
+import { Container } from "../styles";
 
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, "Movies">;
 
@@ -68,14 +69,6 @@ export function HomeScreen(props: HomeScreenProps) {
     </Container>
   );
 }
-
-const Container = styled.View`
-  flex: 1;
-  background-color: #24295c;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
 
 const MovieSearch = styled.TextInput`
   background-color: white;

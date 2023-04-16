@@ -1,26 +1,46 @@
-import { Text } from "react-native";
+import { Button, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/types";
-import { MoviePoster } from "../components/movie/MoviePoster";
+import { MoviePoster } from "../components/movie-poster/MoviePoster";
+import { Container } from "../styles";
+import { useEffect, useState } from "react";
+import { FetchMovieDetails } from "../utils/fetchMovieDetails";
 import styled from "styled-components/native";
 
 type DetailsScreenProps = NativeStackScreenProps<RootStackParamList, "Details">;
 
 export function Details(props: DetailsScreenProps) {
-  const movieData: any = props.route.params;
-  // console.log(props.route.params);
+  const [movieDetails, setMovieDetails] = useState<any>(null);
+
+  useEffect(() => {
+    const runOnLoad = async () => {
+      const result = await FetchMovieDetails((props.route.params as any).Title);
+      setMovieDetails(result);
+      console.log("inside Details screen: ", result);
+    };
+    runOnLoad();
+  }, []);
+
   return (
     <Container>
-      <Text>Movie Details: {movieData.Title}</Text>
-      <MoviePoster movieData={movieData} />
+      <Spacer />
+      <MoviePoster movieData={props.route.params} />
+      {movieDetails && (
+        <>
+          <TextContent>Year: {movieDetails.Year}</TextContent>
+          <TextContent>Director: {movieDetails.Director}</TextContent>
+          <TextContent>Plot: {movieDetails.Plot}</TextContent>
+          <TextContent>Imdb: {movieDetails.imdbRating}</TextContent>
+        </>
+      )}
     </Container>
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #24295c;
-  align-items: center;
-  width: 100%;
-  height: 100%;
+const TextContent = styled.Text`
+  color: white;
+`;
+
+const Spacer = styled.View`
+  margin-top: 10px;
 `;
