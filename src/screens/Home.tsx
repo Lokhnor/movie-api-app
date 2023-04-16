@@ -8,14 +8,13 @@ export function HomeScreen() {
   const [apiResults, setApiResults] = useState<object[]>([]);
   const [movieData, setMovieData] = useState<object[]>([]);
   const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
-
   const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     const fetchOnFirstLoad = async () => {
-      const result = await FetchMovies("godzilla");
-      setApiResults(result.Search);
-      setMovieData(result.Search.slice(0, moviesDisplayed));
+      const { Search } = await FetchMovies("godzilla");
+      setApiResults(Search);
+      setMovieData(Search.slice(0, moviesDisplayed));
     };
     fetchOnFirstLoad();
   }, []);
@@ -26,11 +25,12 @@ export function HomeScreen() {
   }
 
   async function movieSearch() {
-    const result = await FetchMovies(searchInput);
-    console.log(result.Search[0]);
-    setApiResults(result.Search);
-    setMovieData(result.Search.slice(0, 2));
-    setMoviesDisplayed(2);
+    if (searchInput) {
+      const { Search } = await FetchMovies(searchInput);
+      setApiResults(Search);
+      setMovieData(Search.slice(0, 2));
+      setMoviesDisplayed(2);
+    }
   }
 
   const renderItem = ({ item }: { item: any }) => (
