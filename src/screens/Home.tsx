@@ -18,7 +18,7 @@ export function HomeScreen(props: HomeScreenProps) {
 
   useEffect(() => {
     const fetchOnFirstLoad = async () => {
-      const { Search } = await FetchMovies("godzilla");
+      const { Search } = await FetchMovies("godzilla", false);
       setApiResults(Search);
       setMovieData(Search.slice(0, moviesDisplayed));
     };
@@ -32,7 +32,7 @@ export function HomeScreen(props: HomeScreenProps) {
 
   async function movieSearch() {
     if (searchInput) {
-      const { Search } = await FetchMovies(searchInput);
+      const { Search } = await FetchMovies(searchInput, false);
       setApiResults(Search);
       setMovieData(Search.slice(0, 2));
       setMoviesDisplayed(2);

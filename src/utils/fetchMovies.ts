@@ -1,11 +1,11 @@
 import axios from "axios";
 import { API_KEY } from "../../config";
 
-export async function FetchMovies(movieSearch: string) {
+export async function FetchMovies(movieSearch: string, getDetails: boolean) {
   try {
     const { data } = await axios.get("http://www.omdbapi.com/", {
       params: {
-        s: movieSearch,
+        [getDetails ? "t" : "s"]: movieSearch,
         type: "movie",
         apikey: API_KEY,
       },

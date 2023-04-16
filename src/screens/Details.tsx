@@ -1,10 +1,9 @@
-import { Button, Text } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../types/types";
 import { MoviePoster } from "../components/movie-poster/MoviePoster";
 import { Container } from "../styles";
 import { useEffect, useState } from "react";
-import { FetchMovieDetails } from "../utils/fetchMovieDetails";
+import { FetchMovies } from "../utils/fetchMovies";
 import styled from "styled-components/native";
 
 type DetailsScreenProps = NativeStackScreenProps<RootStackParamList, "Details">;
@@ -14,7 +13,7 @@ export function Details(props: DetailsScreenProps) {
 
   useEffect(() => {
     const runOnLoad = async () => {
-      const result = await FetchMovieDetails((props.route.params as any).Title);
+      const result = await FetchMovies((props.route.params as any).Title, true);
       setMovieDetails(result);
       console.log("inside Details screen: ", result);
     };
