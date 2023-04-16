@@ -3,27 +3,26 @@ import { Button, FlatList, StatusBar } from "react-native";
 import { FetchMovies } from "../utils/fetchMovies";
 import { Movie } from "../components/movie/Movie";
 import styled from "styled-components/native";
-import { mockData } from "../../mocks";
 
 export function HomeScreen() {
-  const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
+  const [apiResults, setApiResults] = useState<object[]>([]);
   const [movieData, setMovieData] = useState<object[]>([]);
+  const [moviesDisplayed, setMoviesDisplayed] = useState<number>(2);
 
   const [searchInput, setSearchInput] = useState<string>("");
 
   useEffect(() => {
     const fetchOnFirstLoad = async () => {
-      // const result = await FetchMovies();
-      // setMovieData(result);
-      setMovieData(mockData.slice(0, moviesDisplayed));
+      const result = await FetchMovies();
+      setApiResults(result.Search);
+      setMovieData(result.Search.slice(0, moviesDisplayed));
     };
     fetchOnFirstLoad();
   }, []);
 
-  function handleLoadMore() {
+  async function handleLoadMore() {
+    setMovieData(apiResults.slice(0, moviesDisplayed + 2));
     setMoviesDisplayed(moviesDisplayed + 2);
-    // fetch more movies from api
-    setMovieData(mockData.slice(0, moviesDisplayed + 2));
   }
 
   const renderItem = ({ item }: { item: any }) => (
